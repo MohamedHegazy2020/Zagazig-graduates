@@ -20,9 +20,7 @@ export const generalFields = {
 		})
 		.required(),
 	_id: Joi.string().custom(objectIdValidation),
-	token: Joi.string().regex(
-		/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_.+/=]*$/
-	),
+	token: Joi.string().required(),
 };
 
 export const validationCoreFunction = (schema) => {

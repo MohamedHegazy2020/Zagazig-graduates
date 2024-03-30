@@ -25,10 +25,9 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: systemRoles.USER,
+      default: systemRoles.ADMIN,
       enum: [
         systemRoles.ADMIN,
-        systemRoles.SUPER_ADMIN,
         systemRoles.STUDENT,
         systemRoles.GRADUATED,
         systemRoles.COMPANY,
@@ -63,89 +62,12 @@ const userSchema = new mongoose.Schema(
       enum: ["male", "female", "Not specified"],
     },
     age: Number,
-
-    // ============================== fields for student and graduates =====================
-    nationality: {
-      type: String,
-      required: function () {
-        return this.role === systemRoles.STUDENT || systemRoles.GRADUATED;
-      },
-    },
-    nationalNumber: {
-      type: String,
-      required: function () {
-        return this.role === systemRoles.STUDENT || systemRoles.GRADUATED;
-      },
-      unique: true,
-    },
-    universityEmail: {
-      type: String,
-      required: function () {
-        return this.role === systemRoles.STUDENT || systemRoles.GRADUATED;
-      },
-      unique: true,
-    },
-
-    college: {
-      name: {
-        type: String,
-        required: function () {
-          return this.role === systemRoles.STUDENT || systemRoles.GRADUATED;
-        },
-      },
-      department: {
-        type: String,
-        required: function () {
-          return this.role === systemRoles.STUDENT || systemRoles.GRADUATED;
-        },
-      },
-      startDate: {
-        type: String,
-        required: function () {
-          return this.role === systemRoles.STUDENT || systemRoles.GRADUATED;
-        },
-      },
-      graduationDate: {
-        type: String,
-        required: function () {
-          return this.role === systemRoles.GRADUATED;
-        },
-      },
-    },
-
-    // for graduates only
-    postGraduateCourses: [
-      {
-        type: String,
-      },
-    ],
-    job: {
-      title: {
-        type: String,
-        required: function () {
-          return this.role === systemRoles.GRADUATED;
-        },
-      },
-      companyName: {
-        type: String,
-        required: function () {
-          return this.role === systemRoles.GRADUATED;
-        },
-      },
-
-      cv: {
-        secure_url: String,
-        public_id: String,
-      },
-    },
-
-    // ==================================== end of students and graduates =====================
-
     token: String,
     forgetCode: String,
   },
   {
     timestamps: true,
+    discriminatorKey: "modelType",
   }
 );
 

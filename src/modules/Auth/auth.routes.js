@@ -10,21 +10,21 @@ router.post(
 	validationCoreFunction(authValSchema.signUpSchema),
 	authController.signUp
 );
-// router.get(
-// 	"/confirm/:token",
-// 	validationCoreFunction(authValSchema.confirmEmailSchema),
-// 	authController.confirmEmail
-// );
-// router.post(
-// 	"/login",
-// 	validationCoreFunction(authValSchema.logInSchema),
-// 	authController.logIn
-// );
-// router.post(
-// 	"/forgetPassword",
-// 	validationCoreFunction(authValSchema.forgetPasswordSchema),
-// 	authController.forgetPassword
-// );
-// router.post("/reset/:token",validationCoreFunction(authValSchema.resetPasswordSchema), authController.resetPassword);
+router.get(
+	"/confirm/:token",
+	validationCoreFunction(authValSchema.confirmEmailSchema),
+	authController.confirmEmail
+);
+router.post(
+	"/login",
+	validationCoreFunction(authValSchema.logInSchema),
+	authController.logIn
+);
+router.post(
+	"/forgetPassword",
+	validationCoreFunction(authValSchema.forgetPasswordSchema),
+	authController.forgetPassword
+);
+router.post("/reset/:token",validationCoreFunction(authValSchema.resetPasswordSchema), authController.resetPassword);
 
 export default router;

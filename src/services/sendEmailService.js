@@ -20,10 +20,10 @@ export async function sendEmailService({
 	});
 
 	const emailInfo = await transporter.sendMail({
-		from: '"e-commerce 🛒" <${process.env.EMAIL}>',
+		from: '"faculty of computers and informatics" <${process.env.EMAIL}>',
 		to: to ? to : "",
 		subject: subject ? subject : "Hello",
-		html: message ? message : 'mohamedhegazy219427@gmail.com',
+		html: message ? message : 'graduateszagazig@gmail.com',
 		attachments,
 	});
 	if (emailInfo.accepted.length) {
