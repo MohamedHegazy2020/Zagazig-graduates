@@ -71,6 +71,10 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+
+
+
+
 // hooks
 
 userSchema.pre("save", function (next, hash) {

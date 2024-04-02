@@ -8,6 +8,7 @@ import pkg from "bcrypt";
 import otpGenerator from "otp-generator";
 import { studentModel } from "../../../DB/Models/student.model.js";
 import { graduatedModel } from "../../../DB/Models/graduated.model.js";
+import { companyModel } from "../../../DB/Models/company.model.js";
 
 export const signUp = asyncHandler(async (req, res, next) => {
   const {
@@ -22,7 +23,7 @@ export const signUp = asyncHandler(async (req, res, next) => {
     nationality,
     nationalNumber,
     universityEmail,
-    college,
+    college,companyName,
     job,
     postGraduateCourses,
   } = req.body;
@@ -114,6 +115,27 @@ export const signUp = asyncHandler(async (req, res, next) => {
 
     return res.status(201).json({ message: "Done", user: savedUser });
   } else if (role === systemRoles.COMPANY) {
+
+    const user = await companyModel({
+      userName,
+      email,
+      password,
+      address,
+      gender,
+      age,
+      role,
+      phoneNumber,
+      companyName
+    });
+
+    const savedUser = await user.save();
+
+    return res.status(201).json({ message: "Done", user: savedUser });
+
+
+
+
+
   } else {
     const user = await userModel({
       userName,

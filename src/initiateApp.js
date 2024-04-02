@@ -11,7 +11,8 @@ export const initiateApp = (express, app) => {
 
 
 	app.use("/auth", allRouters.authRouter);
-
+	app.use("/job", allRouters.jobRouter);
+app.use('/seminar' ,allRouters.seminarRouter)
 
 
 

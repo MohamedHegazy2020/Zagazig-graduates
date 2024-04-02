@@ -1,11 +1,12 @@
+import cloudinary from "./coludinaryConfigrations.js";
 
 export const asyncHandler = (API) => {
   return (req, res, next) => {
-    API(req, res, next).catch( (err) => {
-      // if (req.uploadPath) {
-      //   await cloudinary.api.delete_resources_by_prefix(req.uploadPath);
-      //   await cloudinary.api.delete_folder(req.uploadPath);
-      // }
+    API(req, res, next).catch(async (err) => {
+      if (req.uploadPath) {
+        await cloudinary.api.delete_resources_by_prefix(req.uploadPath);
+        await cloudinary.api.delete_folder(req.uploadPath);
+      }
       console.log({ err });
       return next(new Error(err, { cause: 500 }));
     });

@@ -22,7 +22,7 @@ export const signUpSchema = {
         systemRoles.ADMIN,
         systemRoles.GRADUATED,
         systemRoles.STUDENT,
-        systemRoles.SUPER_ADMIN
+        systemRoles.COMPANY
       )
       .required(),
     nationality: Joi.string().when("role", {
@@ -70,6 +70,10 @@ export const signUpSchema = {
         is: systemRoles.GRADUATED,
         then: Joi.string().required(),
       }),
+    }),
+    companyName: Joi.string().when("role", {
+      is: systemRoles.COMPANY,
+      then: Joi.string().required(),
     }),
   }).required(),
 };
