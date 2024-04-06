@@ -9,6 +9,7 @@ import otpGenerator from "otp-generator";
 import { studentModel } from "../../../DB/Models/student.model.js";
 import { graduatedModel } from "../../../DB/Models/graduated.model.js";
 import { companyModel } from "../../../DB/Models/company.model.js";
+import createCustomId from "../../utils/customIdGenerator.js";
 
 export const signUp = asyncHandler(async (req, res, next) => {
   const {
@@ -23,7 +24,8 @@ export const signUp = asyncHandler(async (req, res, next) => {
     nationality,
     nationalNumber,
     universityEmail,
-    college,companyName,
+    college,
+    companyName,
     job,
     postGraduateCourses,
   } = req.body;
@@ -43,8 +45,10 @@ export const signUp = asyncHandler(async (req, res, next) => {
   if (isNationalNumDuplicated) {
     return next(new Error("nationalNumber is already exist", { cause: 400 }));
   }
+  // ------------------------------ create cutom id -------------------
 
-  
+  const customId = createCustomId();
+
   // ------------- generate token for confirm email --------------------
 
   const token = generateToken({
@@ -87,7 +91,7 @@ export const signUp = asyncHandler(async (req, res, next) => {
       nationality,
       nationalNumber,
       universityEmail,
-      college,
+      college,customId
     });
 
     const savedUser = await user.save();
@@ -109,13 +113,13 @@ export const signUp = asyncHandler(async (req, res, next) => {
       college,
       job,
       postGraduateCourses,
+      customId,
     });
 
     const savedUser = await user.save();
 
     return res.status(201).json({ message: "Done", user: savedUser });
   } else if (role === systemRoles.COMPANY) {
-
     const user = await companyModel({
       userName,
       email,
@@ -125,17 +129,13 @@ export const signUp = asyncHandler(async (req, res, next) => {
       age,
       role,
       phoneNumber,
-      companyName
+      customId,
+      companyName,
     });
 
     const savedUser = await user.save();
 
     return res.status(201).json({ message: "Done", user: savedUser });
-
-
-
-
-
   } else {
     const user = await userModel({
       userName,
@@ -148,6 +148,7 @@ export const signUp = asyncHandler(async (req, res, next) => {
       nationalNumber,
       universityEmail,
       phoneNumber,
+      customId,
     });
     const savedUser = await user.save();
     return res.status(201).json({ message: "Done", user: savedUser });

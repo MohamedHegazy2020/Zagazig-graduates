@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { generalFields } from "../../middlewares/validation.js";
 
 export const createSeminar = {
   body: Joi.object({
@@ -10,4 +11,16 @@ export const createSeminar = {
     instructorJobTitle: Joi.string().required(),
     instructorAchivements: Joi.string().required(),
   }).required(),
+};
+
+export const applyForSeminar = {
+  params: Joi.object({
+    seminarId: generalFields._id,
+  }),
+};
+
+export const deleteSeminar = {
+  params: Joi.object({
+    seminarId: generalFields._id,
+  }),
 };

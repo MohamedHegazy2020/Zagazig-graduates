@@ -1,4 +1,4 @@
-import mongoose, { model } from "mongoose";
+import mongoose, { Types, model } from "mongoose";
 
 const seminarSchema = new mongoose.Schema(
   {
@@ -6,10 +6,11 @@ const seminarSchema = new mongoose.Schema(
     appointment: { type: Date, required: true },
     description: String,
     maxNumOfAttendants: { type: Number, required: true, default: 30 },
+    attendantsId: [{ type: Types.ObjectId, ref: "User" }],
     customId: String,
     numOfAttendants: {
       type: Number,
-      default: 1,
+      default: 0,
       validate: {
         validator: function (v) {
           return v <= this.maxNumOfAttendants;

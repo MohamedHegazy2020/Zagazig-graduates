@@ -23,6 +23,9 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
+
+    customId: String,
+
     role: {
       type: String,
       default: systemRoles.ADMIN,
@@ -70,10 +73,6 @@ const userSchema = new mongoose.Schema(
     discriminatorKey: "modelType",
   }
 );
-
-
-
-
 
 // hooks
 

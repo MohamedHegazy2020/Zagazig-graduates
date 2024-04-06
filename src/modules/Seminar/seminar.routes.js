@@ -18,4 +18,10 @@ router.post(
   seminarController.createSeminar
 );
 
+router.patch('/applyForSeminar/:seminarId' ,isAuth(seminarRoles.applyForSeminar) ,validationCoreFunction(seminarValidationSchemas.applyForSeminar), seminarController.applyForSeminar)
+
+router.delete('/deleteSeminar/:seminarId' ,isAuth(seminarRoles.deleteSeminar) ,validationCoreFunction(seminarValidationSchemas.deleteSeminar), seminarController.deleteSeminar)
+
+
 export default router;
+ 

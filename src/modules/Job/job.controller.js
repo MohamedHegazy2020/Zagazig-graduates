@@ -49,7 +49,7 @@ return res.status(200).json({message:"Done" , appliedJob})
 
 export const deleteJob = asyncHandler(async (req,res,next)=>{
     const { jobId } = req.params;
-    const deletedJob = await jobModel.findOneAndDelete({_id:jobId , createdBy:req.authUser._id})
+    const deletedJob = await jobModel.findByIdAndDelete(jobId)
 
 
     if(!deletedJob){
