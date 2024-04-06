@@ -17,7 +17,7 @@ router.patch(
 router.patch(
     "/uploadCv",
     isAuth(userRoles.uploadCV),
-    multerCloudFunction(allowedExtensions.Image).single("cv"),
+    multerCloudFunction(allowedExtensions.Files).single("cv"),
     userController.uploadCV
   );
 
