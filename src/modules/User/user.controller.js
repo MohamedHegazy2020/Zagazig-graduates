@@ -1,5 +1,6 @@
 import { graduatedModel } from "../../../DB/Models/graduated.model.js";
 import { userModel } from "../../../DB/Models/user.model.js";
+import cloudinary from "../../utils/coludinaryConfigrations.js";
 import { asyncHandler } from "../../utils/errorhandling.js";
 
 // ========================= upload profile picture ======================
@@ -13,20 +14,25 @@ export const uploadProfilePicture = asyncHandler(async (req, res, next) => {
   if (!req.file) {
     return next(new Error("upload your image", { cause: 400 }));
   }
-  req.uploadPath = `${process.env.PROJECT_FOLDER}/users/${user.customId}/profilePicture`;
+  req.uploadPath = `${process.env.PROJECT_FOLDER}/users/${user.customId}/profilePicture/`;
   const { public_id, secure_url } = await cloudinary.uploader
     .upload(req.file.path, {
       folder: req.uploadPath,
     })
-    .catch((err) => next(new Error(err, { cause: 500 })));
+    .catch((err) => { 
+        
+        console.log(err);
+        return next(new Error(err.message, { cause: 500 }))});
 
   if (!public_id) {
     return next(
-      new Error("failed to upload instructorProfilePicture", { cause: 500 })
+      new Error("failed to upload  ProfilePicture", { cause: 500 })
     );
   }
 
-  await user.updateOne({ profilePicture: { public_id, secure_url } });
+  user.profilePicture = { public_id, secure_url };
+
+  await user.updateOne();
 
   return res.status(200).json({ message: "Done", user });
 });
